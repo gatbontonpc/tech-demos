@@ -1,0 +1,362 @@
+@import 'leaflet/dist/leaflet.css';
+
+:root {
+  --bg0: #0b1218;
+  --bg1: #121c26;
+  --bg2: #1a2836;
+  --ink: #e8eef4;
+  --muted: #8fa3b5;
+  --line: rgba(232, 238, 244, 0.12);
+  --truth: #f4f1e8;
+  --wn: #3ecfcf;
+  --baseline: #f0a35e;
+  --ensemble: #7aa2ff;
+  --danger: #ff6b6b;
+  --ok: #7ddea0;
+  --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --font-body: 'IBM Plex Sans', 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(62, 207, 207, 0.12), transparent 55%),
+    radial-gradient(900px 500px at 90% 0%, rgba(240, 163, 94, 0.1), transparent 50%),
+    linear-gradient(180deg, var(--bg0), #071016 70%, #05090d);
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+
+body {
+  min-height: 100vh;
+}
+
+#app {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 1rem 1.25rem 0.85rem;
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(8px);
+  background: rgba(11, 18, 24, 0.72);
+}
+
+.brand {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.brand h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 550;
+  font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+  letter-spacing: -0.02em;
+}
+
+.brand p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  max-width: 52ch;
+}
+
+.cache-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.45rem;
+  padding: 0.25rem 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+  background: rgba(26, 40, 54, 0.65);
+}
+
+.cache-pill .dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--ok);
+  box-shadow: 0 0 0 3px rgba(125, 222, 160, 0.15);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+  gap: 0;
+  min-height: 0;
+}
+
+.map-pane {
+  position: relative;
+  min-height: 520px;
+  border-right: 1px solid var(--line);
+}
+
+#map {
+  position: absolute;
+  inset: 0;
+}
+
+.map-legend {
+  position: absolute;
+  z-index: 500;
+  left: 0.85rem;
+  bottom: 0.85rem;
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(11, 18, 24, 0.82);
+  backdrop-filter: blur(6px);
+  font-size: 0.78rem;
+}
+
+.map-legend span {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.swatch {
+  width: 1.1rem;
+  height: 0.22rem;
+  border-radius: 2px;
+}
+
+.swatch.truth {
+  background: var(--truth);
+}
+.swatch.wn {
+  background: var(--wn);
+}
+.swatch.baseline {
+  background: var(--baseline);
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--baseline),
+    var(--baseline) 4px,
+    transparent 4px,
+    transparent 7px
+  );
+}
+.swatch.ensemble {
+  background: var(--ensemble);
+  opacity: 0.7;
+}
+
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 0.9rem 1rem 1.1rem;
+  background: linear-gradient(180deg, rgba(18, 28, 38, 0.95), rgba(11, 18, 24, 0.98));
+  overflow: auto;
+}
+
+.panel {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0.8rem 0.85rem;
+  background: rgba(26, 40, 54, 0.35);
+}
+
+.panel h2 {
+  margin: 0 0 0.65rem;
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  font-weight: 550;
+}
+
+.controls {
+  display: grid;
+  gap: 0.7rem;
+}
+
+label.field {
+  display: grid;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+select,
+input[type='range'] {
+  width: 100%;
+}
+
+select {
+  appearance: none;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg1)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%8fa3b5' d='M1 1l5 5 5-5'/%3E%3C/svg%3E")
+    no-repeat right 0.7rem center;
+  color: var(--ink);
+  padding: 0.5rem 2rem 0.5rem 0.65rem;
+  font: inherit;
+}
+
+.toggles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem 0.6rem;
+}
+
+.toggles label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: var(--ink);
+}
+
+.lead-readout {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.scoreboard {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.score-row {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1fr;
+  gap: 0.4rem;
+  align-items: end;
+}
+
+.score-row .label {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.score-row .val {
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+}
+
+.score-row .val.wn {
+  color: var(--wn);
+}
+.score-row .val.baseline {
+  color: var(--baseline);
+}
+
+.score-head {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.chart-wrap svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.chart-bg {
+  fill: rgba(11, 18, 24, 0.55);
+}
+
+.grid {
+  stroke: rgba(232, 238, 244, 0.08);
+  stroke-width: 1;
+}
+
+.tick,
+.legend text,
+.axis-label {
+  fill: var(--muted);
+  font-size: 10px;
+  font-family: var(--font-mono);
+}
+
+.axis-label {
+  font-size: 11px;
+}
+
+.series-wn {
+  stroke: var(--wn);
+  stroke-width: 2.4;
+}
+
+.series-base {
+  stroke: var(--baseline);
+  stroke-width: 2.4;
+  stroke-dasharray: 6 4;
+}
+
+.series-wn-swatch {
+  fill: var(--wn);
+}
+.series-base-swatch {
+  fill: var(--baseline);
+}
+
+.scrub {
+  stroke: rgba(232, 238, 244, 0.45);
+  stroke-width: 1.25;
+  stroke-dasharray: 3 3;
+}
+
+.note {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.footer {
+  border-top: 1px solid var(--line);
+  padding: 0.75rem 1.25rem 1rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+  background: rgba(7, 10, 14, 0.85);
+}
+
+.footer strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.footer a {
+  color: var(--wn);
+}
+
+@media (max-width: 960px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .map-pane {
+    min-height: 420px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+}
