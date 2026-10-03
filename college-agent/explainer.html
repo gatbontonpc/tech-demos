@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why the Sunday memo can be trusted · Waypoint</title>
+<style>
+:root{
+  --c-primary:#1F4E5F; --c-primary-soft:#E3EEF1; --c-on-primary:#fff;
+  --c-accent:#B5541C; --c-bg:#F7F6F2; --c-surface:#fff; --c-surface-2:#F0EEE8;
+  --c-border:#D9D5CC; --c-text:#1C2326; --c-text-2:#4A5559; --c-text-3:#5F6B70;
+  --c-success:#1E6B47; --c-warning:#8A5300; --c-warning-bg:#FBEFD9;
+  --tier-reach:#C2410C; --tier-reach-bg:#FCE9DE; --tier-reach-ink:#9A3412;
+  --tier-stretch:#D99A00; --tier-stretch-bg:#FBF0D2; --tier-stretch-ink:#7A5200;
+  --tier-target:#0072B2; --tier-target-bg:#DDEEF8; --tier-target-ink:#005A8C;
+  --tier-fit:#009E73; --tier-fit-bg:#DBF2EA; --tier-fit-ink:#00664A;
+  --font-sans:Inter,"Segoe UI",system-ui,sans-serif;
+  --font-serif:"Liberation Serif","Source Serif 4",Georgia,serif;
+  --font-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--c-bg);color:var(--c-text);font:17px/1.6 var(--font-sans)}
+.wrap{max-width:860px;margin:0 auto;padding:48px 24px 80px}
+h1,h2,h3{font-family:var(--font-serif);line-height:1.2;font-weight:600}
+h1{font-size:2.6rem;letter-spacing:-.02em;margin:8px 0 12px}
+h2{font-size:1.7rem;margin:48px 0 12px}
+h3{font-size:1.15rem;margin:0 0 8px}
+p{margin:0 0 14px}
+.eyebrow{font:600 12px/1.4 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--c-accent)}
+.lead{font-size:1.15rem;color:var(--c-text-2)}
+.diagram{background:var(--c-surface);border:1px solid var(--c-border);border-radius:16px;padding:16px;margin:18px 0 8px}
+.diagram svg{width:100%;height:auto;display:block}
+.cap{font:12px/1.45 var(--font-mono);color:var(--c-text-3);margin:0 0 18px}
+code,pre{font-family:var(--font-mono);font-size:.86em}
+pre{background:var(--c-surface-2);border:1px solid var(--c-border);border-radius:10px;padding:14px;overflow:auto}
+.flag{display:inline-block;font:700 11px/1 var(--font-mono);letter-spacing:.05em;text-transform:uppercase;background:var(--c-warning-bg);color:var(--c-warning);border-radius:6px;padding:3px 6px}
+a{color:#1D5C96}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <p class="eyebrow">Waypoint · how the admissions agent is put together</p>
+  <h1>Why the Sunday memo can be trusted</h1>
+  <p class="lead">College admissions is a fifteen-month file, not a conversation. A sixteen-year-old cannot be expected to know which fact about themselves would move a list, so an empty text box is the wrong front door. Waypoint reads the record, stores claims with their sources, asks the three questions that would actually change the schools, and reports once a week. This page is why each of those pieces is shaped the way it is.</p>
+  <p>The student in the diagrams is <strong>Avery Chen</strong> of Northline High, class of 2027. <span class="flag">Fictional</span> The schools and the dollar figures are invented. The mechanisms are the ones in the prototype.</p>
+
+  <h2>1. Three connectors, because the permissions are not the same thing</h2>
+  <p>A single “connect Google” button would be easier to draw and worse to explain. Gmail and Drive are search problems. The app is allowed to look for transcripts, score reports, activity mail, and essays, and it is not allowed to send, delete, or share anything. Google Photos is not a search problem. An app that asked for the photo library would be able to see the whole camera roll, which is the wrong permission for “show me the Science Olympiad medal.” The Photos Picker API exists so the app can read only the items a person picks.</p>
+  <div class="diagram">
+    <svg viewBox="0 0 820 250" role="img" aria-label="Three connectors. Gmail and Drive are searched. Photos opens a picker. Gaps become upload slots.">
+      <g font-family="system-ui,sans-serif" font-size="13" fill="#1C2326">
+        <rect x="16" y="30" width="180" height="78" rx="12" fill="#E3EEF1" stroke="#1F4E5F"/>
+        <text x="106" y="58" text-anchor="middle" font-weight="700">Gmail</text>
+        <text x="106" y="78" text-anchor="middle" fill="#4A5559" font-size="11">gmail.readonly</text>
+        <text x="106" y="94" text-anchor="middle" fill="#4A5559" font-size="11">search, then stop</text>
+        <rect x="220" y="30" width="180" height="78" rx="12" fill="#E3EEF1" stroke="#1F4E5F"/>
+        <text x="310" y="58" text-anchor="middle" font-weight="700">Drive</text>
+        <text x="310" y="78" text-anchor="middle" fill="#4A5559" font-size="11">drive.readonly</text>
+        <text x="310" y="94" text-anchor="middle" fill="#4A5559" font-size="11">names and text</text>
+        <rect x="424" y="30" width="180" height="78" rx="12" fill="#FBEFD9" stroke="#B5541C"/>
+        <text x="514" y="58" text-anchor="middle" font-weight="700">Photos Picker</text>
+        <text x="514" y="78" text-anchor="middle" fill="#4A5559" font-size="11">session, then a tab</text>
+        <text x="514" y="94" text-anchor="middle" fill="#4A5559" font-size="11">only picked items</text>
+        <rect x="628" y="30" width="176" height="78" rx="12" fill="#fff" stroke="#D9D5CC" stroke-dasharray="4 3"/>
+        <text x="716" y="62" text-anchor="middle" font-weight="700">Upload slot</text>
+        <text x="716" y="82" text-anchor="middle" fill="#4A5559" font-size="11">only if nothing matched</text>
+        <path d="M106 108 V150 H716 V108" fill="none" stroke="#5F6B70"/>
+        <rect x="250" y="168" width="320" height="52" rx="12" fill="#fff" stroke="#1F4E5F"/>
+        <text x="410" y="190" text-anchor="middle" font-weight="700">One claim store</text>
+        <text x="410" y="208" text-anchor="middle" fill="#4A5559" font-size="11">source, date, confidence on every line</text>
+      </g>
+    </svg>
+  </div>
+  <p class="cap">Gmail and Drive can be queried. Photos cannot. The dashed box is the residual, not the front door.</p>
+  <p>The Picker flow is a session, not a scope that quietly widens later. The app calls <code>sessions.create</code> on <code>photospicker.googleapis.com</code>, gets back an <code>id</code> and a <code>pickerUri</code>, and opens that URI in a new tab. Appending <code>/autoclose</code> closes the tab when the person hits Done. The app then polls <code>sessions.get</code> on the interval in <code>pollingConfig.pollInterval</code> until <code>mediaItemsSet</code> is true or <code>timeoutIn</code> runs out. Only then does <code>mediaItems.list</code> return the picked files. If <code>mediaItemsSet</code> stays false, there is nothing to download, which is the point: no selection means no photos.</p>
+  <p>Upload slots are the same rule applied to documents. They appear after a search finishes empty. They do not appear on the first screen, because a drop zone would teach the family to assemble a packet by hand, which is the job the connectors just took. In the demo, Gmail and Drive fixtures find the transcript, the SAT mail, the activities doc, and the essay. They do not find a photo of the medal or a senior fall grade report, so those two slots open and nothing else does.</p>
+  <p>Demo mode is a different door, painted as one. It loads Avery’s fixtures and labels every connector “Fixture.” It does not call Google, and it does not flip a connector to “Connected as you@gmail.com.” If the client ID is missing, the real buttons still run and then stop with the error. A silent fallback would make a broken OAuth client look like a successful login, and then every provenance tag on the dossier would be a lie.</p>
+
+  <h2>2. The pipeline writes claims, and every claim wears its source</h2>
+  <p>A chat transcript is a bad place to keep a GPA. The number is buried in a turn, it has no date, and when a new score arrives you cannot diff it against last week. Waypoint stores a claim: a field, a value, the file it came from, how sure the extraction was, and whether a person has confirmed it. The dossier, the portfolio, the memo, and the counselor roster all read that same object. When Avery fixes the intended major, the old Drive tag stays on the card. The correction is marked “Fixed by you.” The source and the edit are different facts, and both have to remain visible or the family cannot audit the line.</p>
+  <div class="diagram">
+    <svg viewBox="0 0 820 168" role="img" aria-label="Extraction pipeline from a Gmail message to a claim, a provenance tag, and a confirm or fix.">
+      <defs>
+        <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#5F6B70"/></marker>
+      </defs>
+      <g font-family="system-ui,sans-serif" font-size="12" fill="#1C2326">
+        <rect x="10" y="40" width="140" height="70" rx="12" fill="#E3EEF1" stroke="#1F4E5F"/>
+        <text x="80" y="70" text-anchor="middle" font-weight="700">Gmail message</text>
+        <text x="80" y="88" text-anchor="middle" fill="#4A5559">Sep 15, 2026</text>
+        <rect x="180" y="40" width="140" height="70" rx="12" fill="#F0EEE8" stroke="#D9D5CC"/>
+        <text x="250" y="70" text-anchor="middle" font-weight="700">Slot matcher</text>
+        <text x="250" y="88" text-anchor="middle" fill="#4A5559">transcript</text>
+        <rect x="350" y="28" width="170" height="94" rx="12" fill="#fff" stroke="#1F4E5F" stroke-width="2"/>
+        <text x="435" y="58" text-anchor="middle" font-weight="700">Claim · GPA</text>
+        <text x="435" y="78" text-anchor="middle">3.82, rising</text>
+        <text x="435" y="98" text-anchor="middle" fill="#1E6B47">high confidence</text>
+        <rect x="550" y="40" width="120" height="70" rx="12" fill="#fff" stroke="#D9D5CC"/>
+        <text x="610" y="72" text-anchor="middle" font-weight="700">Tag</text>
+        <text x="610" y="90" text-anchor="middle" fill="#4A5559" font-size="11">source stays</text>
+        <rect x="698" y="40" width="108" height="70" rx="12" fill="#DBF2EA" stroke="#009E73"/>
+        <text x="752" y="72" text-anchor="middle" font-weight="700">Confirm</text>
+        <text x="752" y="90" text-anchor="middle">or fix</text>
+        <g stroke="#5F6B70" fill="none" marker-end="url(#ar)">
+          <path d="M150 75 H176"/><path d="M320 75 H346"/><path d="M520 75 H546"/><path d="M670 75 H694"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+  <p class="cap">The matcher in this prototype keys off subject lines and file names. A later parser can fill the value. It should not get to throw away the tag.</p>
+  <p>Here is Avery’s GPA as stored. Everything in it is made up.</p>
+  <pre>{
+  "id": "gpa",
+  "value": "3.82 unweighted. 9th 3.61, 10th 3.74, 11th 3.96.",
+  "provenance": {
+    "source": "Gmail",
+    "detail": "Official transcript — Northline High",
+    "when": "Sep 15, 2026",
+    "confidence": "high"
+  },
+  "status": "unreviewed"
+}</pre>
+  <p>Confidence is a property of the extraction, not a vibe. The GPA is high because the transcript mail and the Drive PDF agree on the file, and the demo fixture already contains the parsed number. The intended major is medium because no sentence in the file says “mechanical engineering.” The robotics captaincy and the AP mix imply it. That is a different kind of uncertainty from “we only have 64 example self-reports for Ridgeview,” and the tags are written so a parent can tell them apart.</p>
+  <p>The live path is narrower on purpose. With a real client ID, Gmail’s <code>users.messages.list</code> runs a handful of read-only queries (transcript, score report, activity, award, essay, fall grades), then <code>messages.get</code> with <code>format=metadata</code> so the app stores subject, from, and date rather than the message body. Drive’s <code>files.list</code> does the same with file names. The claim text then says a file matched and that this build did not read a number out of the PDF. Shipping a confident GPA from a filename would be worse than shipping a low-confidence claim the student has to type.</p>
+
+  <h2>3. Rank the unknowns by how far the list would move</h2>
+  <p>An interview of forty questions fails for a mechanical reason. Most of the answers do not change which schools are on the list, and the student can feel that, so they stop answering. The replacement is a sort. Each unknown gets a decision impact: how many schools enter, leave, or change zone if the answer flips. Keep the top three. Throw the rest out of the first session.</p>
+  <div class="diagram">
+    <svg viewBox="0 0 820 210" role="img" aria-label="Many possible questions sorted by decision impact. Only the top three are asked.">
+      <g font-family="system-ui,sans-serif" font-size="12" fill="#1C2326">
+        <text x="16" y="22" fill="#5F6B70" font-family="ui-monospace,monospace" font-size="11">WORKING SET · 9 SCHOOLS</text>
+        <g>
+          <rect x="16" y="36" width="520" height="36" rx="8" fill="#FCE9DE" stroke="#C2410C"/>
+          <text x="28" y="58" font-weight="700">Would you leave the West Coast?</text>
+          <text x="520" y="58" text-anchor="end">moves 5</text>
+        </g>
+        <g>
+          <rect x="16" y="80" width="430" height="36" rx="8" fill="#DDEEF8" stroke="#0072B2"/>
+          <text x="28" y="102" font-weight="700">Hard ceiling on net cost?</text>
+          <text x="430" y="102" text-anchor="end">re-tiers 2</text>
+        </g>
+        <g>
+          <rect x="16" y="124" width="360" height="36" rx="8" fill="#DBF2EA" stroke="#009E73"/>
+          <text x="28" y="146" font-weight="700">Is a required co-op a must-have?</text>
+          <text x="360" y="146" text-anchor="end">adds 1 card</text>
+        </g>
+        <g opacity=".45">
+          <rect x="16" y="168" width="180" height="28" rx="8" fill="#F0EEE8" stroke="#D9D5CC"/>
+          <text x="28" y="186">Weekend plans?</text>
+          <rect x="206" y="168" width="150" height="28" rx="8" fill="#F0EEE8" stroke="#D9D5CC"/>
+          <text x="218" y="186">Favorite class?</text>
+        </g>
+        <text x="560" y="58" fill="#1E6B47" font-weight="700">ask</text>
+        <text x="560" y="102" fill="#1E6B47" font-weight="700">ask</text>
+        <text x="560" y="146" fill="#1E6B47" font-weight="700">ask</text>
+        <text x="560" y="186" fill="#5F6B70">not this week</text>
+      </g>
+    </svg>
+  </div>
+  <p class="cap">Bar length is the count of schools the answer would move. The faded questions are real preferences. They are not first.</p>
+  <p>The West Coast question is first because five of the nine schools in the working set are outside the region: Lakemont, which is already on the list, plus Redcedar, Kingsmill, Easton, and Northwater, which are not. Lakemont is the only reach. “West Coast only” removes the reach and leaves a 0–2–2–1 balance, which the portfolio says out loud as “thin on reach.” “Yes, I’ll leave” keeps Lakemont and does not silently add the other four. They stay candidates until a decision card says otherwise. That split matters. A preference the student just confirmed can change the list. A tier change the agent noticed in new admit data cannot, not until Approve, Keep plan, or Ask counselor.</p>
+  <p>The cost question is second because the example bands are already numbers. Lakemont is $31–38k. Harbor Tech is $22–29k. A ceiling near $25k puts one school above the plan and one on the edge. A ceiling near $15k leaves Sierra Pacific as the only school fully inside it. Without a ceiling, every cost tag is a range with nothing to compare it to, so “no ceiling yet” is an allowed answer and it lowers confidence instead of inventing a number.</p>
+  <p>The co-op question is third because it is the only reason Tidewater is a card at all. Harbor Tech and Tidewater both require a co-op. Tidewater is not on the list. If co-op is a must-have, Sunday’s memo has a real decision: add a target under the ceiling that is farther from Northline than anything else. If co-op is merely nice, that card can wait. Asking “tell me about your activities” would have felt relevant and would not have changed a single zone.</p>
+  <p>Skip is a button on each question, and it is not a trap. Two skips drop list confidence to low and widen every range by four points on the zone strip. The portfolio still opens. A blocked screen would punish the student for not knowing yet, which is how the forty-question interview loses them.</p>
+
+  <h2>4. The week is a loop that ends in two memos</h2>
+  <p>The dossier is how the agent gets a model on day one. It is not a reason to come back in November. The reason to come back is that deadlines, portal mail, aid bands, and admit profiles change while the family is doing something else. The loop is: jobs run, diffs are written, two memos are drafted, a person clears the cards that would change the list, and next week’s jobs read the updated claims.</p>
+  <div class="diagram">
+    <svg viewBox="0 0 820 230" role="img" aria-label="Weekly loop. Jobs produce diffs. Diffs produce a student memo and a parent memo. Decision buttons write back to claims.">
+      <defs>
+        <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#5F6B70"/></marker>
+      </defs>
+      <g font-family="system-ui,sans-serif" font-size="12" fill="#1C2326">
+        <rect x="24" y="24" width="160" height="64" rx="12" fill="#E3EEF1" stroke="#1F4E5F"/>
+        <text x="104" y="50" text-anchor="middle" font-weight="700">14 jobs</text>
+        <text x="104" y="68" text-anchor="middle" fill="#4A5559">Sat 6:12am</text>
+        <rect x="230" y="24" width="160" height="64" rx="12" fill="#F0EEE8" stroke="#D9D5CC"/>
+        <text x="310" y="50" text-anchor="middle" font-weight="700">Diffs</text>
+        <text x="310" y="68" text-anchor="middle" fill="#4A5559">deadline, aid, tier</text>
+        <rect x="436" y="8" width="170" height="48" rx="12" fill="#fff" stroke="#1F4E5F"/>
+        <text x="521" y="36" text-anchor="middle" font-weight="700">Student memo</text>
+        <rect x="436" y="64" width="170" height="48" rx="12" fill="#fff" stroke="#B5541C"/>
+        <text x="521" y="92" text-anchor="middle" font-weight="700">Parent memo</text>
+        <rect x="650" y="24" width="146" height="64" rx="12" fill="#DBF2EA" stroke="#009E73"/>
+        <text x="723" y="50" text-anchor="middle" font-weight="700">Approve</text>
+        <text x="723" y="68" text-anchor="middle">Keep · Ask</text>
+        <g fill="none" stroke="#5F6B70" marker-end="url(#ar2)">
+          <path d="M184 56 H226"/>
+          <path d="M390 48 L432 32"/>
+          <path d="M390 64 L432 88"/>
+          <path d="M606 32 L646 48"/>
+          <path d="M606 88 L646 68"/>
+        </g>
+        <path d="M723 88 C723 180 104 180 104 92" fill="none" stroke="#5F6B70" stroke-dasharray="4 4" marker-end="url(#ar2)"/>
+        <text x="400" y="168" text-anchor="middle" fill="#5F6B70" font-size="11">the decision writes back into the claims the next jobs read</text>
+        <text x="400" y="208" text-anchor="middle" fill="#5F6B70" font-size="11">history: Sep 13 dossier · Sep 20 Sierra Pacific approved · Sep 27 no cards</text>
+      </g>
+    </svg>
+  </div>
+  <p class="cap">The dashed arrow is the product. A memo that cannot change next week’s jobs is a newsletter.</p>
+  <p>Two copies, because the readers are stuck on different sentences. Avery needs “Harbor Tech Early Action closes November 1, the supplement is 392 words, one recommender is still open.” A parent needs “Cascade’s example net price moved to $15–19k, Lakemont is still $31–38k, and 7 of 9 schools still fit a $25k ceiling.” Same underlying diffs. The parent copy does not hide the deadline. It just refuses to lead with a word count.</p>
+  <p>Anything that would move a tier or add a school is a card with three buttons, not a paragraph that already did it. Ridgeview’s October admit profile, a thin one at n=64, would place Avery in stretch. The portfolio keeps the target badge and prints the proposal as a flag until Approve. Keep plan leaves the badge and records that the profile was seen and declined. Ask counselor puts the family on the roster’s waiting column and still does not move the school. The agent is allowed to be wrong in a memo. It is not allowed to be wrong inside the list.</p>
+  <p>The jobs are listed beside the memo, fourteen of them, including the ones that found nothing: no fall grade file, no aid letter, scholarship X already closed. A background agent that only reports hits looks like it is selling. One that reports the empty searches is checkable. Past memos sit under the current one, three weeks of them, so Sunday does not feel like a first run. Week 35 was the dossier. Week 36 was the Sierra Pacific add, which went through a card. Week 37 had a new SAT on file and zero decisions. That is the shape of a quiet week, and the product has to be willing to send it.</p>
+
+  <h2>What this build deliberately does not do</h2>
+  <p>There is no message box, on the family screens or on the counselor roster. There is no live College Scorecard call. The bands are example numbers with source tags that say so. There is no PDF parser and no model reading an essay. There is no cron server. The weekly loop in the demo is a fixture of jobs, diffs, and history, wired to the same buttons the live claims use. OAuth, the Gmail and Drive searches, and the Photos Picker session are the real clients. They run only when a client ID is present, and they fail in the open when it is not.</p>
+  <p>Open the app, load the fictional fixtures, and walk Sources, Dossier, the three questions, the portfolio, both memos, and the optional roster. The explainer is this file. It does not need a build.</p>
+</main>
+</body>
+</html>
