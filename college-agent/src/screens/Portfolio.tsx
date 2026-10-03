@@ -121,6 +121,7 @@ export function Portfolio() {
                 ))}
               </ul>
             )}
+            <p className="micro label">Why it is on the list</p>
             <ul className="fitlist">
               {school.why.map((item) => (
                 <li key={item} className="plus">

@@ -181,7 +181,10 @@ p { margin: 0 0 12px; }
 .btn:disabled { opacity: 0.55; cursor: not-allowed; }
 .next-row { margin-top: 8px; }
 
-.connector p { color: var(--c-text-2); font-size: var(--fs-small); min-height: 4.6em; }
+.connector { display: flex; flex-direction: column; gap: 0; }
+.connector > p { color: var(--c-text-2); font-size: var(--fs-small); }
+.connector > p:first-of-type { min-height: 6.4em; }
+.connector .btn { margin-top: auto; }
 .scope {
   font: 500 var(--fs-micro) / 1.4 var(--font-mono);
   color: var(--c-text-3);
@@ -323,7 +326,8 @@ p { margin: 0 0 12px; }
 }
 .stat b { font-size: var(--fs-small); font-weight: 650; }
 .flags { margin: 8px 0; padding-left: 18px; font-size: var(--fs-small); color: var(--c-primary-strong); }
-.fitlist { margin: 8px 0 0; padding-left: 18px; font-size: var(--fs-small); }
+.label { margin: 8px 0 0; letter-spacing: 0.04em; text-transform: uppercase; color: var(--c-text-3); font-weight: 700; }
+.fitlist { margin: 4px 0 0; padding-left: 18px; font-size: var(--fs-small); }
 .fitlist .plus::marker { color: var(--c-success); }
 .fitlist .minus::marker { color: var(--c-danger); }
 

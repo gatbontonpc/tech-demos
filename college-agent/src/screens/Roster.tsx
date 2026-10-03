@@ -5,6 +5,12 @@ import type { TierName } from "../types";
 
 const TIERS: TierName[] = ["reach", "stretch", "target", "fit"];
 
+function wordFor(value: number): "high" | "medium" | "low" {
+  if (value >= 0.75) return "high";
+  if (value >= 0.5) return "medium";
+  return "low";
+}
+
 export function Roster() {
   const state = useAppState();
   const counts = state.mode === "unset" ? null : balance(state);
@@ -79,7 +85,10 @@ export function Roster() {
                     <span className="micro muted">{row.balance.join(" · ")}</span>
                   </td>
                   <td>
-                    <span className="conf-num">{Math.round(row.confidence * 100)}%</span>
+                    <span className={`tag conf-${wordFor(row.confidence)}`}>
+                      <span className="dot" />
+                      {wordFor(row.confidence)}
+                    </span>
                     <span className="conf-track">
                       <i style={{ width: `${row.confidence * 100}%` }} />
                     </span>
