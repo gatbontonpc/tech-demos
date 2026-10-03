@@ -1,0 +1,10 @@
+{
+  "name": "tech-demos",
+  "private": true,
+  "description": "Delegates to the college-agent prototype.",
+  "scripts": {
+    "postinstall": "npm install --prefix college-agent",
+    "dev": "npm run dev --prefix college-agent",
+    "build": "npm run build --prefix college-agent"
+  }
+}
